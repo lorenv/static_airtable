@@ -34,7 +34,201 @@
 
       body {font-family: 'Cabin',arial; font-size: 14px; color: #FF0000;}
 
+      a:link, a:visited{ font-size: 16px; text-decoration: none; color: #FF0000;}<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:output method="html" encoding="utf-8" />
+
+<xsl:template match="/feeds">
+<html>
+  <head>
+
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache" />
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache" />
+<META HTTP-EQUIV="Expires" CONTENT="0" />
+<meta http-equiv="expires" value="Thu, 16 Mar 2000
+11:00:00 GMT" />
+
+    <style>
+      @import url('//fonts.googleapis.com/css?family=Cabin:400,700');
+      @import url('//meltwaternews.com/ext/a3logics/US/bootstrap/css/bootstrap.min.css');
+      body {font-family: 'Cabin',arial; font-size: 14px; color: #FF0000;}
       a:link, a:visited{ font-size: 16px; text-decoration: none; color: #FF0000;}
+      a:hover  { font-size: 16px; text-decoration: none; color: #FFFFFF; }
+      .article {min-height: 180px; padding: 20px 20px 20px 0;}
+      .article:hover { background: #FFFFFF; cursor: pointer;}
+      .title {color: #054A85; padding: 0 0 0 15px;}
+      .article:hover > .title {border-left:0px solid #FF000;}
+      .date {color: #b3b3b3; padding: 0 0 0 17px; margin-top: 10px;}
+      .container-fluid {}
+      .row {margin: 0;}
+      li:hover {cursor: pointer;}
+
+
+.test1{clear:both;}
+
+.disabled {
+       pointer-events: none;
+       cursor: default;
+}
+
+    </style>
+
+    <script type="text/javascript" src="//meltwaternews.com/ext/a3logics/APAC/iframeResizer.contentWindow.min.js"></script>
+    <script type="text/javascript" src="//meltwaternews.com/js/jquery_1.4.js"></script>
+    <script type="text/javascript" src="//meltwaternews.com/ext/a3logics/US/bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      $(function(){
+// enter number of hits displayed per page
+var hitspp = 10;
+// no need to edit below this line
+
+// adds the navigation
+$("<div></div>").insertAfter("#marquee").addClass("mwNavi").addClass("row").css({"height":"175px"});
+$("<ul></ul>").appendTo(".mwNavi").addClass("pagination").addClass("col-sm-12");
+
+// inserts the articles to the "pages", adds a navigation link for each page
+$("div.article").each(
+  function(n){
+    if(n % hitspp == 0){
+      var pagen = n / hitspp;
+      $("<div></div>").insertBefore("div.mwNavi").hide().addClass("page").attr("id", pagen);
+      $("div.article:eq(" + n + ")").clone().appendTo("div.page:eq(" + pagen +")").addClass("article1");
+
+      $("<li></li>").addClass("inactive").attr("id", "li"+pagen).appendTo("ul.pagination");
+
+      $("<a>" + (pagen + 1) + "</a>").attr("id", pagen).appendTo("#li"+pagen).addClass("pagesel");
+    }
+
+    else {
+      var pagen = (n - (n % hitspp)) / hitspp;
+      $("div.article:eq(" + n + ")").clone().appendTo("div.page:eq(" + pagen +")").addClass("article1");
+    };
+  });
+// show the first page
+$("div.article").hide();
+$("div.article1").show();
+$("div.page").filter("#0").show();
+
+// show the page selcted in the navigation
+$("a.pagesel").click(function(){
+  var pages = $(this).attr("id");
+  $("div.page").hide().filter("#" + pages).show();
+
+// let it look like "real" links
+$("a.pagesel").parent().removeClass("active").removeClass("disabled").addClass("inactive");
+$(this).parent().removeClass("inactive").addClass("active").addClass("disabled");
+});
+$("a.pagesel:eq(0)").parent().removeClass("inactive").addClass("active").addClass("disabled");
+
+
+$("<div></div>").insertBefore(".mwNavi").addClass("test1");
+});
+
+</script>
+  </head>
+  <body>
+    <xsl:apply-templates/>
+  </body>
+</html>
+</xsl:template>
+
+<xsl:template match="feed">
+  <div id="marquee" class="container-fluid">
+    <div class="row" >
+    <xsl:for-each select="documents/document">
+      <xsl:if test="title[not(.=preceding::title)]">
+<div class="col-md-4 col-sm-6 article" >
+<table style="border:solid 1px #000000; height:280px; width:400px;">
+  <tr>
+    <td>
+<div class="date" style="color:#000000; font-family: Arial,sans-serif;">
+              <xsl:if test="(createDate_mon='01')">January</xsl:if>
+              <xsl:if test="(createDate_mon='02')">February</xsl:if>
+              <xsl:if test="(createDate_mon='03')">March</xsl:if>
+              <xsl:if test="(createDate_mon='04')">April</xsl:if>
+              <xsl:if test="(createDate_mon='05')">May</xsl:if>
+              <xsl:if test="(createDate_mon='06')">June</xsl:if>
+              <xsl:if test="(createDate_mon='07')">July</xsl:if>
+              <xsl:if test="(createDate_mon='08')">August</xsl:if>
+              <xsl:if test="(createDate_mon='09')">September</xsl:if>
+              <xsl:if test="(createDate_mon='10')">October</xsl:if>
+              <xsl:if test="(createDate_mon='11')">November</xsl:if>
+              <xsl:if test="(createDate_mon='12')">December</xsl:if>
+              <xsl:text> </xsl:text>
+              <xsl:value-of select="createDate_day2"/>
+              <xsl:text>, </xsl:text>
+              <xsl:value-of select="createDate_year"/>
+              <xsl:text> - </xsl:text>
+              <span class="source"><xsl:value-of select="sourcename"/></span>
+            </div>
+            <xsl:text disable-output-escaping="yes"> &amp;nbsp;</xsl:text>
+            <xsl:text disable-output-escaping="yes"> &amp;nbsp;</xsl:text>
+          </td></tr>
+
+            <xsl:text disable-output-escaping="yes"> &amp;nbsp;</xsl:text>
+            <xsl:text disable-output-escaping="yes"> &amp;nbsp;</xsl:text>
+
+<tr><td>
+            <div class="title" style="color:#054A85; font-family: Arial,sans-serif;">
+<xsl:if test="(language = 'Arabic')"><xsl:attribute name="style">direction: rtl;</xsl:attribute></xsl:if>
+<xsl:if test="language != 'Arabic'"><xsl:attribute name="style">direction: ltr;</xsl:attribute></xsl:if>
+              <a>
+                <xsl:attribute name="href"><xsl:value-of select="url"/></xsl:attribute>
+                <xsl:attribute name="target">_blank</xsl:attribute>
+                <xsl:attribute name="title"><xsl:value-of select="wordsMatched2"/></xsl:attribute>
+                <xsl:value-of select="substring(title,1,140)"/>
+                <xsl:if test="string-length(title) > 140">...</xsl:if>
+              </a>
+            </div>
+<xsl:text disable-output-escaping="yes"> &amp;nbsp;</xsl:text>
+<xsl:text disable-output-escaping="yes"> &amp;nbsp;</xsl:text>
+          </td></tr>
+
+          
+<tr><td>
+            <div style="padding-left:15px; color:#000000; font-family: Arial,sans-serif;" class="ingress"><xsl:value-of select="substring(ingress,1,90)"/>...</div>
+            <xsl:text disable-output-escaping="yes"> &amp;nbsp;</xsl:text>
+</td></tr>
+
+<tr><td>
+            <div>
+          <a style="font-family: Arial,sans-serif; font-size: 14px; color:#002478; padding-top: 5px; padding-left:10px;">
+            <xsl:attribute name="href"><xsl:value-of select="url"/></xsl:attribute>
+            <xsl:attribute name="target">_blank</xsl:attribute>
+           <img src="http://meltwaternews.com/ext/blr/Thanfiya/Newsfeed/NICS-30508/readmore.png" width="200"/></a></div>
+         </td></tr>
+       </table>
+
+            <!-- <div class="date">
+              <xsl:if test="(createDate_mon='01')">January</xsl:if>
+              <xsl:if test="(createDate_mon='02')">February</xsl:if>
+              <xsl:if test="(createDate_mon='03')">March</xsl:if>
+              <xsl:if test="(createDate_mon='04')">April</xsl:if>
+              <xsl:if test="(createDate_mon='05')">May</xsl:if>
+              <xsl:if test="(createDate_mon='06')">June</xsl:if>
+              <xsl:if test="(createDate_mon='07')">July</xsl:if>
+              <xsl:if test="(createDate_mon='08')">August</xsl:if>
+              <xsl:if test="(createDate_mon='09')">September</xsl:if>
+              <xsl:if test="(createDate_mon='10')">October</xsl:if>
+              <xsl:if test="(createDate_mon='11')">November</xsl:if>
+              <xsl:if test="(createDate_mon='12')">December</xsl:if>
+              <xsl:text> </xsl:text>
+              <xsl:value-of select="createDate_day2"/>
+              <xsl:text>, </xsl:text>
+              <xsl:value-of select="createDate_year"/>
+              <xsl:text> - </xsl:text>
+              <span class="source"><xsl:value-of select="sourcename"/></span>
+            </div> -->
+          </div>
+<xsl:if test="position() mod 4 = 0">
+
+</xsl:if>
+        </xsl:if>
+    </xsl:for-each>
+</div></div>
+</xsl:template>
+</xsl:stylesheet>
 
       a:hover  { font-size: 16px; text-decoration: none; color: #FFFFFF; }
 
